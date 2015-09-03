@@ -1,4 +1,5 @@
 <?php
+
 // web/app.php
  
 use Symfony\Component\HttpFoundation\Request;

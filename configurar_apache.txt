@@ -1,0 +1,67 @@
+Anadir ruta a /etc/hosts
+========================
+
+##### Editar /etc/hosts y añadirle
+
+127.0.0.1    knight.local
+::1
+
+Configurar el virtual host
+==========================
+
+##### Crear /etc/apache2/sites-available/knight.conf
+##### Enlazarlo a /etc/apache2/sites-enabled/knight.conf
+##### Editarlo con el siguiente contenido
+
+
+<VirtualHost *:80>
+    ServerName knight.local 
+    DocumentRoot /home/kowalski/Desarrollo/knight/web
+    DirectoryIndex	app.php
+ 
+    ErrorLog "/home/kowalski/Desarrollo/knight/app/logs/apache_errors.log"
+    CustomLog "/home/kowalski/Desarrollo/knight/app/logs/apache_accesses.log" common
+ 
+    <Directory /home/kowalski/Desarrollo/knight/web>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+ 
+        <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ /app.php [QSA,L]
+        </IfModule>
+    </Directory>
+</VirtualHost>
+
+
+### He tenido que cambiar allow,deny por deny,allow que es menos restrictiva
+
+Permitir que apache escriba en los directorios cache y logs
+===========================================================
+sudo setfacl -R -m u:www-data:rwx -m u:kowalski:rwx app/cache app/logs
+sudo setfacl -dR -m u:www-data:rwx -m u:kowalski:rwx app/cache app/logs
+
+
+
+La siguiente configuración es la que viene en el libro Desarrollo web ágil ...
+==============================================================================
+
+
+<VirtualHost *:80>
+    DocumentRoot   "/home/kowalski/Desarrollo/knight/web"
+    DirectoryIndex app.php
+    ServerName     cupon.local
+ 
+    <Directory "/home/kowalski/Desarrollo/knight/web">
+        AllowOverride All
+        Allow from All
+    </Directory>
+</VirtualHost>
+
+Nota
+Si utilizas la versión 2.4 o superior de Apache, reemplaza 
+la directiva Allow from All por Require all granted para evitar 
+errores de tipo 403 con el mensaje "Client denied by server configuration".

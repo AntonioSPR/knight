@@ -1,0 +1,20 @@
+#app/config/routing.yml
+cotizacion:
+	path: /api/{empresa}
+	methods:
+		- GET
+    defaults:
+        _controller: AppBundle:Api:cotizacion
+
+informacion:
+	path: /api/informacion
+	methods:
+		- POST
+	defaults:
+		_controller: AppBundle:Api:informacion
+
+path: /api/ni
+    methods:
+        - POST
+    defaults:
+        _controller: KnightApplicationBundle:Api:ni
