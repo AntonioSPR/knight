@@ -17,4 +17,4 @@ path: /api/ni
     methods:
         - POST
     defaults:
-        _controller: KnightApplicationBundle:Api:ni
+        _controller: AppBundle:Api:ni

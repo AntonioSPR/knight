@@ -1,5 +1,0 @@
-# app/config/app.yml
-framework:
-    secret: "El valor de esta opción debe ser una cadena aleatoria."
-    router:
-    	resource: %kernel.root_dir%/config/routing.yml

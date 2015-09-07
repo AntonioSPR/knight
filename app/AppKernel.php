@@ -1,5 +1,6 @@
 <?php
 // app/AppKernel.php
+
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
  
@@ -18,6 +19,8 @@ class AppKernel extends Kernel
         $file = 'config';
         if ('test' === $this->getEnvironment()) {
             $file .= '_test';
-        }$loader->load(__DIR__.'/config/$file.yml');
+        }
+
+        $loader->load(__DIR__.'/config/$file.yml');
     }
 }
